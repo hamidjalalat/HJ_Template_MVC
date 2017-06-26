@@ -1,4 +1,5 @@
-﻿using Models;
+﻿using Infrastructure;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace HJ_Template_MVC.Controllers
         [HttpPost]
         public virtual ActionResult Login(string username, string password, string Remember)
         {
-            Infrastructure.Hash oHash = new Infrastructure.Hash();
+            Hash oHash = new Hash();
             string HashPassword = oHash.GetCreateHash(password.Trim());
             bool RememberMe = false;
             RememberMe = Remember != null ? true : false;
