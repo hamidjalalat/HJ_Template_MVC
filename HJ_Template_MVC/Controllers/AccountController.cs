@@ -21,7 +21,7 @@ namespace HJ_Template_MVC.Controllers
         {
             Infrastructure.Hash oHash = new Infrastructure.Hash();
             string HashPassword = oHash.GetCreateHash(password.Trim());
-        bool RememberMe = false;
+            bool RememberMe = false;
             RememberMe = Remember != null ? true : false;
             var Result = db.Users
                 .Where(current => current.Name == username.Trim() && current.Password ==HashPassword)
