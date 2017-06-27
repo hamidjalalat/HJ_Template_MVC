@@ -12,7 +12,7 @@ using Infrastructure;
 
 namespace HJ_Template_MVC.Controllers
 {
-    [Authorize]
+    [Authorize(Roles ="Admins")]
     //[Infrastructure.Log]
     public partial class UsersController : Infrastructure.BaseController
     {

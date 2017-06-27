@@ -1,19 +1,18 @@
-﻿using Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Collections.Specialized;
-using System.Configuration.Provider;
 using System.Web.Security;
-using System.Data.Common;
 
-namespace HJ_Template_MVC.App_Code
+namespace HJ_Template_MVC.Security
 {
-    public class CustomRolesProvider : System.Web.Security.RoleProvider
-       
+    public class CustomRolesProvider:RoleProvider
     {
-        private DataBaseContext db=new DataBaseContext();
+        public CustomRolesProvider() : base()
+        {
+
+        }
+
         public override string ApplicationName
         {
             get
@@ -61,6 +60,7 @@ namespace HJ_Template_MVC.App_Code
             //    ro += item+",";
             //}
             //var   RolesString = ro.Split(',');
+  
             string[] dd = { "admin" };
             return dd;
         }
