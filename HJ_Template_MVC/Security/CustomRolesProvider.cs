@@ -9,7 +9,7 @@ namespace HJ_Template_MVC.Security
 {
     public class CustomRolesProvider:RoleProvider
     {
-      
+        private DataBaseContext db = new DataBaseContext();
         public CustomRolesProvider() : base()
         {
 
@@ -50,22 +50,17 @@ namespace HJ_Template_MVC.Security
 
         public override string[] GetAllRoles()
         {
-            throw new NotImplementedException();
+                return db.Roles.Select(r => r.Name).ToArray();
         }
 
         public override string[] GetRolesForUser(string username)
         {
-            using (   DataBaseContext db = new DataBaseContext())
-            {
-                var user = db.Users.SingleOrDefault(u => u.Name == username);
-                var userRoles = db.Roles.Select(r => r.Name);
-
-                if (user == null)
-                    return new string[] { };
-                return user.Roles == null ? new string[] { } :
-                    userRoles.ToArray();
-            }
-         
+            var Role = db.Users
+                           .Where(r => r.Name == username)
+                           .SelectMany(x => x.Roles)
+                           ;
+            var re = Role.Select(C => C.Name).ToArray();
+            return  re;
         }
 
         public override string[] GetUsersInRole(string roleName)
@@ -75,7 +70,13 @@ namespace HJ_Template_MVC.Security
 
         public override bool IsUserInRole(string username, string roleName)
         {
-            throw new NotImplementedException();
+            var user = db.Users.SingleOrDefault(u => u.Name == username);
+            var userRoles = db.Roles.Select(r => r.Name);
+
+            if (user == null)
+                return false;
+            return user.Roles != null &&
+                userRoles.Any(r => r == roleName);
         }
 
         public override void RemoveUsersFromRoles(string[] usernames, string[] roleNames)
