@@ -20,6 +20,7 @@ namespace HJ_Template_MVC.Controllers
         // GET: Users
         public virtual ViewResult Index()
         {
+
             var users = db.Users
                 .OrderBy(current => current.Name)
                .ToList()

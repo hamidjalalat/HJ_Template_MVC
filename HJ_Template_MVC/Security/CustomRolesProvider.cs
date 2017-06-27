@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +9,7 @@ namespace HJ_Template_MVC.Security
 {
     public class CustomRolesProvider:RoleProvider
     {
+      
         public CustomRolesProvider() : base()
         {
 
@@ -53,16 +55,17 @@ namespace HJ_Template_MVC.Security
 
         public override string[] GetRolesForUser(string username)
         {
-            //var Roles = db.Users.Where(C => C.Name == "adminadmin").Select(C => C.Roles.Select(current => current.Name));
-            //string ro=string.Empty; 
-            //foreach (var item in Roles)
-            //{
-            //    ro += item+",";
-            //}
-            //var   RolesString = ro.Split(',');
-  
-            string[] dd = { "admin" };
-            return dd;
+            using (   DataBaseContext db = new DataBaseContext())
+            {
+                var user = db.Users.SingleOrDefault(u => u.Name == username);
+                var userRoles = db.Roles.Select(r => r.Name);
+
+                if (user == null)
+                    return new string[] { };
+                return user.Roles == null ? new string[] { } :
+                    userRoles.ToArray();
+            }
+         
         }
 
         public override string[] GetUsersInRole(string roleName)
