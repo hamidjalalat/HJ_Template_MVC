@@ -37,9 +37,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Name)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Password)
-                </th>
+           
                 <th>
                     @Html.DisplayNameFor(model => model.DataCreate)
                 </th>
@@ -58,9 +56,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Password)
-                    </td>
+                 
                     <td>
                         @Html.DisplayFor(modelItem => item.DataCreate)
                     </td>
@@ -85,7 +81,9 @@
 
     <script src=@Links.scripts.jquery_unobtrusive_ajax_min_js></script>
     <script>
+        
         $(document).ready(function () {
+   
             $.validator.unobtrusive.parse("form#frmMain");
             $('button#btnOpenCreateDialog').click(function () {
 
@@ -94,7 +92,7 @@
             });
 
             $('button#btnCreate').click(function () {
-
+               
                 $('#btnCreate').hide();
                 $('div#message').html('');
 
@@ -125,15 +123,20 @@
 
                         $('#loadingDIV').hide();
                      
+                 
 
                         if (response.success == true) {
+                            var datenow = Date();
+                            var formatdate = "";
+                            for (var i = 0; i < 25; i++) {
+                                formatdate += datenow[i];
+                            }
                             // ايجاد يک سطر به (جدول) فهرست کاربران
                             var varRow =
                                 '<tr ><td > </td><td>' + $('input#Name').val() +
-                                '</td><td>' + $('input#Password').val() +
-                                '</td> <td>' + Date() +
+                                '</td> <td>' + formatdate +
                                 '</td></tr>';
-
+                            
                             //$('table#data').prepend(varRow);
                             $('tr#firsttr').after(varRow);
                             $('input#Password').val('');
