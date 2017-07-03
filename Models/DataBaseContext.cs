@@ -32,6 +32,13 @@ namespace Models
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Configurations.Add(new Role.Configuration());
+            modelBuilder.Configurations.Add(new User.Configuration());
+        }
 
     }
 }

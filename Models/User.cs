@@ -9,6 +9,15 @@ namespace Models
 {
     public class User:BaseEntity
     {
+        #region Configuration
+        internal class Configuration:System.Data.Entity.ModelConfiguration.ComplexTypeConfiguration<User>
+        {
+            public Configuration() : base()
+            {
+
+            }
+        }
+        #endregion /Configuration
         public User() :base()
         {
         }
